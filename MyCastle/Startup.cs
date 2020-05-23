@@ -28,7 +28,7 @@ namespace MyCastle
 						.AddEntityFrameworkStores<SqliteContext>(options => options
 							.UseSqlite("Data Source=mycastle.db;Cache=Shared")));
 
-			services.AddActivity<SwitchWaterZone>();
+			services.AddActivity<OpenValve>();
 			services.AddActivity<LogMessage>();
 			
 			services
