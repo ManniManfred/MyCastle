@@ -1,8 +1,10 @@
 ﻿using Elsa;
 using Elsa.Attributes;
+using Elsa.Expressions;
 using Elsa.Results;
 using Elsa.Services;
 using Elsa.Services.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,18 +31,36 @@ namespace MyCastle
 		}
 
 		[ActivityProperty(Hint = "The message to write.")]
-		public string Message
+		public WorkflowExpression<string> Message
 		{
-			get => GetState<string>();
+			get
+			{
+				var defaultValue = new LiteralExpression("");
+				var item = State.GetValue("Message", StringComparison.OrdinalIgnoreCase);
+				if (item == null || item.Type == JTokenType.Null)
+					return defaultValue != null ? defaultValue : default;
+
+				if (item.Type == JTokenType.String)
+					return new LiteralExpression(item.ToObject<string>());
+
+				return item.ToObject<WorkflowExpression<string>>();
+			}
 			set => SetState(value);
 		}
 
-		protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context, CancellationToken cancellationToken)
+		protected override ActivityExecutionResult OnExecute(WorkflowExecutionContext context)
 		{
-			await writer.WriteLineAsync(Message);
+			writer.WriteLine(Message);
 
-			return Done();
+			return base.OnExecute(context);
 		}
+
+		//protected override async Task<ActivityExecutionResult> OnExecuteAsync(WorkflowExecutionContext context, CancellationToken cancellationToken)
+		//{
+		//	await writer.WriteLineAsync(Message);
+		//
+		//	return Done();
+		//}
 
 	}
 }
