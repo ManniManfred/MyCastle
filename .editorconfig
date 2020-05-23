@@ -1,0 +1,7 @@
+# Informationen zu EDITORCONFIG-Dateien finden Sie unter https://aka.ms/editorconfigdocs
+
+# All files
+[*]
+indent_style = tab
+indent_size = 2
+
