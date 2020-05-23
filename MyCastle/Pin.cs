@@ -1,9 +1,5 @@
-﻿using Org.BouncyCastle.Asn1.Mozilla;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Device.Gpio;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyCastle
 {
