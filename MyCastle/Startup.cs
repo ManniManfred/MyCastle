@@ -46,18 +46,22 @@ namespace MyCastle
 				app.UseDeveloperExceptionPage();
 			}
 
-			app.UseHttpActivities();
 			app.UseStaticFiles();
+			app.UseDefaultFiles();
+
+			app.UseHttpActivities();
+
 			app.UseRouting();
 			app.UseEndpoints(ep => ep.MapControllers());
 
-			app.UseEndpoints(endpoints =>
-			{
-			    endpoints.MapGet("/test", async context =>
-			    {
-			        await context.Response.WriteAsync("Hello World!");
-			    });
-			});
+
+			//app.UseEndpoints(endpoints =>
+			//{
+			//    endpoints.MapGet("/test", async context =>
+			//    {
+			//        await context.Response.WriteAsync("Hello World!");
+			//    });
+			//});
 		}
 	}
 }
