@@ -3,6 +3,9 @@ import vueResource from 'https://cdn.jsdelivr.net/npm/vue-resource@1.5.1/dist/vu
 
 Vue.use(vueResource);
 
+const activeFill = "#007bff";
+const hoverFill = "#cccccc";
+
 var app = new Vue({
 	el: '#app',
 	data: {
@@ -18,26 +21,28 @@ var app = new Vue({
 				}
 			});
 		},
-		setActiveArea: function(area) {
-			if (typeof area == "string")
-			{
-				for (const key in app.$data.areas) {
-					if (app.$data.areas.hasOwnProperty(key)) {
-						var work = app.$data.areas[key];
-						if (work.name == area) {
-							area = work;
-							break;
-						}
-					}
+		getArea: function(areaName)
+		{
+			for (const key in app.$data.areas) {
+				if (app.$data.areas.hasOwnProperty(key)) {
+					var work = app.$data.areas[key];
+					if (work.name == areaName)
+						return work;
 				}
 			}
+			return null;
+		},
+
+		setActiveArea: function(area) {
+			if (typeof area == "string")
+				area = this.getArea(area);
 			
 			if (this.$data.activeArea)
 			{
 				var areaEle = this.$data.activeArea.element;
 				if (areaEle)
 				{
-					areaEle.style.fill = areaEle.prevFill;
+					areaEle.style.fill = this.$data.activeArea.color;
 					areaEle.style.strokeWidth = 0.0;
 				}
 			}
@@ -49,8 +54,7 @@ var app = new Vue({
 				var areaEle = this.$data.activeArea.element;
 				if (areaEle)
 				{
-					areaEle.prevFill = areaEle.style.fill;
-					areaEle.style.fill = "#007bff";
+					areaEle.style.fill = activeFill;
 					areaEle.style.strokeWidth = 0.7;
 					areaEle.style.stroke = "black";
 				}
@@ -71,19 +75,26 @@ var zoneMouseDown = function () {
 }
 
 var zoneMouseEnter = function () {
-	this.prevFill = this.style.fill;
-	this.style.fill = "#cccccc";
+	this.style.fill = hoverFill;
 	this.style.strokeWidth = 0.7;
 	this.style.stroke = "black";
 }
 
 var zoneMouseLeave = function () {
-	this.style.fill = this.prevFill;
-	this.style.strokeWidth = 0.0;
+	const area = app.getArea(this.id);
+	if (app.$data.activeArea == area)
+	{
+		this.style.fill = activeFill;
+		this.style.strokeWidth = 0.7;
+	}
+	else
+	{
+		this.style.fill = area.color;
+		this.style.strokeWidth = 0.0;
+	}
 }
 
 gartenSvg.addEventListener("load", function () {
-
 
 	for (const key in app.$data.areas) {
 		if (app.$data.areas.hasOwnProperty(key)) {
@@ -92,6 +103,7 @@ gartenSvg.addEventListener("load", function () {
 			var svgDoc = gartenSvg.contentDocument;
 			var zoneElement = svgDoc.getElementById(area.name);
 			area.element = zoneElement;
+			area.color = zoneElement.style.fill;
 
 			zoneElement.addEventListener("mousedown", zoneMouseDown, false);
 			zoneElement.addEventListener("mouseenter", zoneMouseEnter, false);
