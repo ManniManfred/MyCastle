@@ -7,7 +7,8 @@ var app = new Vue({
 	el: '#app',
 	data: {
 		message: 'Hello Vue!',
-		areas: []
+		areas: [],
+		activeArea: null
 	},
 	methods: {
 		loadSettings: function () {
@@ -16,6 +17,44 @@ var app = new Vue({
 					this.$data.areas = response.data.areas;
 				}
 			});
+		},
+		setActiveArea: function(area) {
+			if (typeof area == "string")
+			{
+				for (const key in app.$data.areas) {
+					if (app.$data.areas.hasOwnProperty(key)) {
+						var work = app.$data.areas[key];
+						if (work.name == area) {
+							area = work;
+							break;
+						}
+					}
+				}
+			}
+			
+			if (this.$data.activeArea)
+			{
+				var areaEle = this.$data.activeArea.element;
+				if (areaEle)
+				{
+					areaEle.style.fill = areaEle.prevFill;
+					areaEle.style.strokeWidth = 0.0;
+				}
+			}
+
+			this.$data.activeArea = area;
+			
+			if (this.$data.activeArea)
+			{
+				var areaEle = this.$data.activeArea.element;
+				if (areaEle)
+				{
+					areaEle.prevFill = areaEle.style.fill;
+					areaEle.style.fill = "#007bff";
+					areaEle.style.strokeWidth = 0.7;
+					areaEle.style.stroke = "black";
+				}
+			}
 		}
 	},
 	mounted: function () {
@@ -28,7 +67,7 @@ var app = new Vue({
 var gartenSvg = document.getElementById("GartenSvg");
 
 var zoneMouseDown = function () {
-	alert('zoneMouseDown!' + this.id);
+	app.setActiveArea(this.id);
 }
 
 var zoneMouseEnter = function () {
@@ -48,10 +87,11 @@ gartenSvg.addEventListener("load", function () {
 
 	for (const key in app.$data.areas) {
 		if (app.$data.areas.hasOwnProperty(key)) {
-			const zone = app.$data.areas[key];
+			const area = app.$data.areas[key];
 
 			var svgDoc = gartenSvg.contentDocument;
-			var zoneElement = svgDoc.getElementById(zone.name);
+			var zoneElement = svgDoc.getElementById(area.name);
+			area.element = zoneElement;
 
 			zoneElement.addEventListener("mousedown", zoneMouseDown, false);
 			zoneElement.addEventListener("mouseenter", zoneMouseEnter, false);

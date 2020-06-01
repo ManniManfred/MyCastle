@@ -2,33 +2,45 @@
 <html lang="de">
 
 <head>
-    <meta charset='utf-8'>
-    <title>MyCastle - Bewässerung</title>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta charset='utf-8'>
+	<title>MyCastle - Bewässerung</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="Garten.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+	<link rel="stylesheet" href="Garten.css">
 
 </head>
 
 <body>
-    <div id="app" class="container">
-        
-        <div id="zones" class="position-fixed float-left bg-secondary">
-            <h2>Zonen</h2>
-            <ul>
-                <li v-for="area in areas"><label><input type="checkbox">{{area.name}}</label></li>
-            </ul>
-        </div>
-        
-        <object id="GartenSvg" data="Garten.svg" type="image/svg+xml"></object>
-        
-    </div>
+	<div id="app" class="container">
+
+		<div id="zones" class="position-fixed float-left">
+			<table class="table bg-light">
+				<thead>
+					<tr>
+						<th scope="col">Zone</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="area in areas" v-bind:class="{'bg-primary':(area == activeArea)}">
+						<td class="cursor-pointer" v-on:click="setActiveArea(area)">{{area.name}}</td>
+						<td><i class="fas fa-shower mr-1"></i></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<object id="GartenSvg" data="Garten.svg" type="image/svg+xml"></object>
+
+	</div>
 
 
 
-    <script type="module" src="Garten.js"></script>
+	<script type="module" src="Garten.js"></script>
 
 </body>
 
