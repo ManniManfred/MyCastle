@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 
 <head>
     <meta charset='utf-8'>
     <title>MyCastle - Bewässerung</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="Garten.css">
 
     <!-- development version, includes helpful console warnings -->
@@ -14,8 +18,9 @@
 </head>
 
 <body>
-    <div id="app">
-        <div id="zones">
+    <div id="app" class="container">
+        
+        <div id="zones" class="position-fixed float-left bg-secondary">
             <h2>Zonen</h2>
             <ul>
                 <li v-for="area in areas"><label><input type="checkbox">{{area.name}}</label></li>
@@ -28,7 +33,7 @@
 
 
 
-    <script src="Garten.js"></script>
+    <script type="module" src="Garten.js"></script>
 
 </body>
 

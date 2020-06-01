@@ -46,13 +46,14 @@ namespace MyCastle
 				app.UseDeveloperExceptionPage();
 			}
 
-			app.UseStaticFiles();
 			app.UseDefaultFiles();
+			app.UseStaticFiles();
 
-			app.UseHttpActivities();
 
-			app.UseRouting();
-			app.UseEndpoints(ep => ep.MapControllers());
+			//app.UseHttpActivities();
+//
+			//app.UseRouting();
+			//app.UseEndpoints(ep => ep.MapControllers());
 
 
 			//app.UseEndpoints(endpoints =>

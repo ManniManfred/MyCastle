@@ -278,10 +278,10 @@
      inkscape:window-height="1027"
      inkscape:window-width="1920"
      showgrid="false"
-     inkscape:current-layer="Rasen2"
+     inkscape:current-layer="layer3"
      inkscape:document-units="mm"
-     inkscape:cy="1293.687"
-     inkscape:cx="236.13839"
+     inkscape:cy="1239.6177"
+     inkscape:cx="458.83861"
      inkscape:zoom="0.70999998"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -406,7 +406,7 @@
      transform="translate(-7.6953856,183.88373)">
     <path
        style="display:inline;fill:#6db04a;fill-opacity:1;stroke-width:0.37795278;stroke-miterlimit:10"
-       d="m 719.85156,-686.56445 -12.76172,12.28125 -0.19726,-0.21094 -629.474611,587.062499 h -0.04687 v 0.04297 l -0.300782,0.28125 0.300782,0.322266 V 285.62109 H 96.269531 V -74.1678 L 697.17458,-633.88777 v 1540.4073 h 22.67698 z M 77.371094,660.83594 V 906.51953 H 96.269531 V 660.83594 Z"
+       d="m 719.85156,-686.56445 -12.76172,12.28125 -0.19726,-0.21094 -629.474611,587.062499 h -0.04687 v 0.04297 l -0.300782,0.28125 0.300782,0.322266 V 285.62109 H 96.269531 V -72.17595 L 697.17458,-633.88777 v 1540.4073 h 22.67698 z M 77.371094,660.83594 V 906.51953 H 96.269531 V 660.83594 Z"
        id="Hecke"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccccccccccccccc"
@@ -420,18 +420,18 @@
      transform="translate(-7.6953856,183.88373)">
     <g
        id="Rasen1"
-       transform="matrix(0.98327696,0,0,0.98327696,1.7870058,-0.23568978)">
+       transform="matrix(0.98327696,0,0,0.98327696,1.7870058,-0.23568978)"
+       style="fill:#000080;fill-opacity:0.73633441">
       <path
-         d="M 94.349052,-85.479086 A 95,95 0 0 1 112.19605,17.228478 95,95 0 0 1 25.072381,74.47204 l -0.05117,-94.999986 z"
+         d="M 93.4111,-84.005161 A 95,95 0 0 1 111.2581,18.702403 95,95 0 0 1 24.134429,75.945964 L 24.08326,-19.054022 Z"
          sodipodi:end="1.5702577"
          sodipodi:start="5.5303697"
          sodipodi:ry="95"
          sodipodi:rx="95"
-         sodipodi:cy="-20.527946"
-         sodipodi:cx="25.021212"
+         sodipodi:cy="-19.054022"
+         sodipodi:cx="24.08326"
          sodipodi:type="arc"
-         id="path2704"
-         style="fill:#000080;fill-opacity:0.73633441;stroke-width:0.1;stroke-miterlimit:10" />
+         id="path2704" />
       <path
          d="M 188.69659,-103.00083 A 75,75 0 0 1 141.25438,-33.475082 75,75 0 0 1 59.104038,-51.80302 l 54.592902,-51.42582 z"
          sodipodi:end="2.3860584"
@@ -441,8 +441,7 @@
          sodipodi:cy="-103.22884"
          sodipodi:cx="113.69694"
          sodipodi:type="arc"
-         id="path2704-3"
-         style="fill:#000080;fill-opacity:0.73633441;stroke-width:0.1;stroke-miterlimit:10" />
+         id="path2704-3" />
       <path
          transform="scale(-1,1)"
          d="m -120.69895,75.04141 a 40,40 0 0 1 39.999999,-39.999998 40,40 0 0 1 39.999999,40 l -40,0 z"
@@ -453,12 +452,12 @@
          sodipodi:cy="75.041412"
          sodipodi:cx="-80.698952"
          sodipodi:type="arc"
-         id="path2704-5-0"
-         style="display:inline;fill:#000080;fill-opacity:0.73633441;stroke-width:0.1;stroke-miterlimit:10" />
+         id="path2704-5-0" />
     </g>
     <g
        id="Rasen2"
-       transform="matrix(0.99277737,0,0,0.99277737,0.96697528,0.13167802)">
+       transform="matrix(0.99277737,0,0,0.99277737,0.96697528,0.13167802)"
+       style="fill:#000080;fill-opacity:0.73633441">
       <path
          transform="scale(-1,1)"
          d="M -185.47655,-101.9862 A 100,100 0 0 1 -85.476547,-1.9862009 100,100 0 0 1 -185.47654,98.013799 l -1e-5,-99.9999996 z"
@@ -469,16 +468,14 @@
          sodipodi:cy="-1.9862006"
          sodipodi:cx="-185.47655"
          sodipodi:type="arc"
-         id="path2704-5"
-         style="display:inline;fill:#000080;fill-opacity:0.73633441;stroke-width:0.1;stroke-miterlimit:10" />
+         id="path2704-5" />
       <rect
          transform="rotate(-90)"
          y="81.911339"
          x="-89.993614"
          height="68.4151"
          width="16.638777"
-         id="rect2774"
-         style="fill:#000080;fill-opacity:0.73633441;stroke-width:0.1;stroke-miterlimit:10" />
+         id="rect2774" />
       <path
          transform="rotate(-90)"
          d="m -138.44884,185.28363 a 25.111958,25.111958 0 0 1 25.11196,-25.11196 25.111958,25.111958 0 0 1 25.111954,25.11196 h -25.111954 z"
@@ -489,8 +486,7 @@
          sodipodi:cy="185.28363"
          sodipodi:cx="-113.33688"
          sodipodi:type="arc"
-         id="path2704-5-0-8"
-         style="display:inline;fill:#000080;fill-opacity:0.73633441;stroke-width:0.1;stroke-miterlimit:10" />
+         id="path2704-5-0-8" />
     </g>
   </g>
   <g
@@ -505,46 +501,43 @@
        transform="scale(0.26458333)"
        id="path1072" />
     <g
-       id="Beet2">
+       id="Beet2"
+       style="fill:#d8b04a">
       <path
          id="path1070"
          transform="scale(0.26458333)"
          d="m 560.73828,300.37891 v 37.79492 h 45.35352 v 45.35351 h 37.79492 V 338.17383 300.37891 H 606.0918 Z"
-         style="display:inline;fill:#d8b04a;fill-opacity:1;stroke-width:0.37795275;stroke-miterlimit:10"
          inkscape:connector-curvature="0" />
       <path
          id="path1068"
          transform="scale(0.26458333)"
          d="m 655.53125,516.07617 v 37.79492 h 41.57762 v -37.79492 z"
-         style="display:inline;fill:#d8b04a;fill-opacity:1;stroke-width:0.37795275;stroke-miterlimit:10"
          inkscape:connector-curvature="0" />
       <path
          id="path1066"
          transform="scale(0.26458333)"
          d="m 606.96484,654.99805 v 37.79492 h 45.35352 v -37.79492 z"
-         style="display:inline;fill:#d8b04a;fill-opacity:1;stroke-width:0.37795275;stroke-miterlimit:10"
          inkscape:connector-curvature="0" />
       <path
          id="path1064"
          transform="scale(0.26458333)"
          d="m 655.59961,793.91992 v 37.79492 h 41.57729 v -37.79492 z"
-         style="display:inline;fill:#d8b04a;fill-opacity:1;stroke-width:0.37795275;stroke-miterlimit:10"
          inkscape:connector-curvature="0" />
     </g>
     <g
-       id="Beet1">
+       id="Beet1"
+       style="fill:#d8b04a">
       <path
          id="path1062"
          transform="scale(0.26458333)"
          d="m 209.69336,960.87109 v 52.98631 l 28.72656,28.7266 h 107.5 l 28.73242,-28.7324 v -52.98051 z"
-         style="display:inline;fill:#d8b04a;fill-opacity:1;stroke-width:0.37795275;stroke-miterlimit:10"
          inkscape:connector-curvature="0" />
       <path
          id="rect2263"
          transform="scale(0.26458333)"
-         d="m 441.13281,961.62109 v 52.98051 l 28.73242,28.7324 h 106.67579 l 29.48242,-29.4824 v 29.4824 h 0.0684 v -81.71291 z"
-         style="display:inline;fill:#d8b04a;fill-opacity:1;stroke-width:0.37795275;stroke-miterlimit:10"
-         inkscape:connector-curvature="0" />
+         d="m 441.13281,961.62109 v 52.98051 l 28.73242,28.7324 h 106.67579 l 29.48242,-29.4824 0.0684,-52.23051 z"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc" />
     </g>
   </g>
   <g

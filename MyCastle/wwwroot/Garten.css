@@ -3,6 +3,7 @@ html, body {
     padding: 0;
 }
 
+/*
 #zones {
     position: fixed;
     background-color: rgba(96, 138, 80, 0.5);
@@ -10,7 +11,7 @@ html, body {
     padding: 10px;
     border: 2px solid rgba(30, 38, 30) ;
 }
-
+*/
 ul {
 	list-style-type: none;
 	padding-left: 0;
