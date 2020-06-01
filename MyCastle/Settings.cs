@@ -35,7 +35,7 @@ namespace MyCastle
 
 		public IReadOnlyCollection<Area> GetAreas() => new ReadOnlyCollection<Area>(data.Areas);
 
-		public Area GetValve(int pin)
+		public Area GetArea(int pin)
 		{
 			pinToArea.TryGetValue(pin, out var result);
 			return result;

@@ -22,10 +22,12 @@ namespace MyCastle
 	public class OpenValve : Activity
 	{
 		private readonly Settings settings;
+		private readonly IGpioController gpio;
 
-		public OpenValve(Settings settings)
+		public OpenValve(Settings settings, IGpioController gpio)
 		{
 			this.settings = settings;
+			this.gpio = gpio;
 		}
 
 		[ActivityProperty(Label = "Ventil", Hint = @"Das zu öffnende Ventil: 
@@ -50,7 +52,7 @@ Beet2 = 16")]
 		protected override ActivityExecutionResult OnExecute(WorkflowExecutionContext context)
 		{
 			var valvePin = Valve;
-			var valve = settings.GetValve(valvePin);
+			var valve = settings.GetArea(valvePin);
 			if (valve == null)
 				return Fault($"Das angegebene Ventil \"{valvePin}\" gibt es nicht. Möglich sind: "
 					+ string.Join("\r\n", settings.GetAreas().Select(v => v.Name + ": " + v.Pin)));
@@ -58,8 +60,7 @@ Beet2 = 16")]
 			if (Duration.TotalSeconds < 1.0)
 				return Fault("Es muss ein Zeitspanne angegeben werden");
 
-			GpioController c = new GpioController(PinNumberingScheme.Board);
-			using (var pin = new Pin(c, valvePin, settings.BoardActiveLow))
+			using (var pin = new Pin(gpio, valvePin, settings.BoardActiveLow))
 			{
 				pin.Open(PinMode.Output);
 				pin.SetActive(true);

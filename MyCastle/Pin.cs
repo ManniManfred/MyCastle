@@ -4,21 +4,26 @@ using System.Device.Gpio;
 namespace MyCastle
 {
   public class Pin : IDisposable
-  {
-		public Pin(GpioController controller, int pin, bool activeLow = false)
+	{
+		private readonly IGpioController controller;
+		private readonly bool autoClose;
+
+		public Pin(IGpioController controller, int pin, bool activeLow, bool autoClose = true)
 		{
-			Controller = controller;
+			this.controller = controller;
 			PinNumber = pin;
 			ActiveLow = activeLow;
+			this.autoClose = autoClose;
 		}
 
-		public GpioController Controller { get; }
 		public int PinNumber { get; }
 		public bool ActiveLow { get; }
 
-		public void Open(PinMode mode) => Controller.OpenPin(PinNumber, mode);
+		public bool IsOpen => controller.IsPinOpen(PinNumber);
 
-		public void Write(PinValue value) => Controller.Write(PinNumber, value);
+		public void Open(PinMode mode) => controller.OpenPin(PinNumber, mode);
+
+		public void Write(PinValue value) => controller.Write(PinNumber, value);
 
 		public void SetActive(bool active)
 		{
@@ -28,9 +33,17 @@ namespace MyCastle
 				Write(ActiveLow ? PinValue.High : PinValue.Low);
 		}
 
+		public bool IsActive()
+		{
+			var value = controller.Read(PinNumber);
+			return ActiveLow ? (value == PinValue.Low) : (value == PinValue.High);
+		}
+
 		public void Dispose()
 		{
-			Controller.ClosePin(PinNumber);
+			if (autoClose)
+				controller.ClosePin(PinNumber);
 		}
+
 	}
 }

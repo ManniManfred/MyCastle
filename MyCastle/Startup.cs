@@ -37,6 +37,8 @@ namespace MyCastle
 
 			services.AddElsaDashboard();
 
+			services.AddSingleton(typeof(IGpioController), new TestGpioController());
+			//services.AddSingleton(typeof(IGpioController), new RealGpioController());
 			services.AddSingleton(typeof(Settings), typeof(Settings));
 		}
 
@@ -60,7 +62,7 @@ namespace MyCastle
 
 			app.UseEndpoints(endpoints =>
 			{
-			    endpoints.MapGet("/test", async context =>
+			    endpoints.MapGet("/", async context =>
 			    {
 			        await context.Response.WriteAsync("Hello World!");
 			    });
