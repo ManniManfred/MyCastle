@@ -36,6 +36,8 @@ namespace MyCastle
 					.AddTimerActivities();
 
 			services.AddElsaDashboard();
+
+			services.AddSingleton(typeof(Settings), typeof(Settings));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,19 +52,19 @@ namespace MyCastle
 			app.UseStaticFiles();
 
 
-			//app.UseHttpActivities();
-//
-			//app.UseRouting();
-			//app.UseEndpoints(ep => ep.MapControllers());
+			app.UseHttpActivities();
+
+			app.UseRouting();
+			app.UseEndpoints(ep => ep.MapControllers());
 
 
-			//app.UseEndpoints(endpoints =>
-			//{
-			//    endpoints.MapGet("/test", async context =>
-			//    {
-			//        await context.Response.WriteAsync("Hello World!");
-			//    });
-			//});
+			app.UseEndpoints(endpoints =>
+			{
+			    endpoints.MapGet("/test", async context =>
+			    {
+			        await context.Response.WriteAsync("Hello World!");
+			    });
+			});
 		}
 	}
 }

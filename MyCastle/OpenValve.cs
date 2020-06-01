@@ -21,6 +21,12 @@ namespace MyCastle
 	)]
 	public class OpenValve : Activity
 	{
+		private readonly Settings settings;
+
+		public OpenValve(Settings settings)
+		{
+			this.settings = settings;
+		}
 
 		[ActivityProperty(Label = "Ventil", Hint = @"Das zu öffnende Ventil: 
 Rasen1 = 11,
@@ -28,9 +34,9 @@ Rasen2 = 12,
 Hecke = 13,
 Beet1 = 15,
 Beet2 = 16")]
-		public ValveEnum Valve
+		public int Valve
 		{
-			get => GetState<ValveEnum>();
+			get => GetState<int>();
 			set => SetState(value);
 		}
 
@@ -43,23 +49,22 @@ Beet2 = 16")]
 
 		protected override ActivityExecutionResult OnExecute(WorkflowExecutionContext context)
 		{
-			var valve = Valve;
-			if (!Enum.IsDefined(typeof(ValveEnum), valve))
-				return Fault($"Das angegebene Ventil \"{valve}\" gibt es nicht. Möglich sind: "
-					+ string.Join("\r\n", Enum.GetNames(typeof(ValveEnum)).Select(n => n + ": " + (int)Enum.Parse(typeof(ValveEnum), n))));
+			var valvePin = Valve;
+			var valve = settings.GetValve(valvePin);
+			if (valve == null)
+				return Fault($"Das angegebene Ventil \"{valvePin}\" gibt es nicht. Möglich sind: "
+					+ string.Join("\r\n", settings.GetAreas().Select(v => v.Name + ": " + v.Pin)));
 
 			if (Duration.TotalSeconds < 1.0)
 				return Fault("Es muss ein Zeitspanne angegeben werden");
 
 			GpioController c = new GpioController(PinNumberingScheme.Board);
-			using (var pin = new Pin(c, (int)valve))
+			using (var pin = new Pin(c, valvePin, settings.BoardActiveLow))
 			{
 				pin.Open(PinMode.Output);
-
-				pin.Write(PinValue.High);
+				pin.SetActive(true);
 				Thread.Sleep(Duration);
-
-				pin.Write(PinValue.Low);
+				pin.SetActive(false);
 			}
 
 			return Done();
