@@ -9,7 +9,7 @@
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<link rel="stylesheet" href="Garten.css">
 
 </head>
@@ -28,7 +28,7 @@
 				<tbody>
 					<tr v-for="area in areas" v-bind:class="{'bg-primary':(area == activeArea)}">
 						<td class="cursor-pointer" v-on:click="setActiveArea(area)">{{area.name}}</td>
-						<td><i class="fas fa-shower mr-1"></i></td>
+						<td><i class="cursor-pointer fas mr-1" v-bind:class="{ 'fa-faucet': area.open, 'fa-shower': !area.open }" v-on:click="switchOpen(area)"></i>{{ "" + area.open}}</td>
 					</tr>
 				</tbody>
 			</table>

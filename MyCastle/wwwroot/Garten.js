@@ -17,12 +17,31 @@ var app = new Vue({
 		loadSettings: function () {
 			this.$http.get('./settings.json').then(response => {
 				if (response && response.ok) {
-					this.$data.areas = response.data.areas;
+
+					// add "open" property, to auto watch
+					var areasArr = response.data.areas;
+					for (const key in areasArr) {
+						if (areasArr.hasOwnProperty(key)) {
+							const area = areasArr[key];
+							area.open = false;
+						}
+					}
+					this.$data.areas = areasArr;
 				}
 			});
 		},
-		getArea: function(areaName)
-		{
+		loadOpened: function () {
+			this.$http.get('/api/open').then(response => {
+				if (response && response.ok) {
+					for (let i = 0; i < response.data.length; i++) {
+						var area = this.getArea(response.data[i]);
+						area.open = true;
+						//area.name = "Test " + area.name;
+					}
+				}
+			});
+		},
+		getArea: function (areaName) {
 			for (const key in app.$data.areas) {
 				if (app.$data.areas.hasOwnProperty(key)) {
 					var work = app.$data.areas[key];
@@ -32,28 +51,37 @@ var app = new Vue({
 			}
 			return null;
 		},
+		switchOpen: function (area) {
+			this.setOpen(area, !area.open);
+		},
+		setOpen: function (area, value) {
+			if (value)
+				this.$http.put('/api/open/' + area.pin);
+			else
+				this.$http.delete('/api/open/' + area.pin);
 
-		setActiveArea: function(area) {
+			area.open = value;
+		},
+		setActiveArea: function (area) {
 			if (typeof area == "string")
 				area = this.getArea(area);
 			
-			if (this.$data.activeArea)
-			{
+			if (area === this.$data.activeArea)
+				area = null;
+
+			if (this.$data.activeArea) {
 				var areaEle = this.$data.activeArea.element;
-				if (areaEle)
-				{
+				if (areaEle) {
 					areaEle.style.fill = this.$data.activeArea.color;
 					areaEle.style.strokeWidth = 0.0;
 				}
 			}
 
 			this.$data.activeArea = area;
-			
-			if (this.$data.activeArea)
-			{
+
+			if (this.$data.activeArea) {
 				var areaEle = this.$data.activeArea.element;
-				if (areaEle)
-				{
+				if (areaEle) {
 					areaEle.style.fill = activeFill;
 					areaEle.style.strokeWidth = 0.7;
 					areaEle.style.stroke = "black";
@@ -63,6 +91,7 @@ var app = new Vue({
 	},
 	mounted: function () {
 		this.loadSettings();
+		this.loadOpened();
 	}
 });
 
@@ -82,13 +111,11 @@ var zoneMouseEnter = function () {
 
 var zoneMouseLeave = function () {
 	const area = app.getArea(this.id);
-	if (app.$data.activeArea == area)
-	{
+	if (app.$data.activeArea == area) {
 		this.style.fill = activeFill;
 		this.style.strokeWidth = 0.7;
 	}
-	else
-	{
+	else {
 		this.style.fill = area.color;
 		this.style.strokeWidth = 0.0;
 	}

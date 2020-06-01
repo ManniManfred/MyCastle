@@ -38,14 +38,14 @@ namespace MyCastle
 			return result;
 		}
 
-		[HttpPut("{pin}")]
-		public void Put(int pinNumber)
+		[HttpPut("{id}")]
+		public void Put(int id)
 		{
-			var area = settings.GetArea(pinNumber);
+			var area = settings.GetArea(id);
 			if (area == null)
-				throw new ArgumentException($"Pin {pinNumber} is not found.");
+				throw new ArgumentException($"Pin {id} is not found.");
 
-			using (var pin = new Pin(gpio, pinNumber, settings.BoardActiveLow, false))
+			using (var pin = new Pin(gpio, id, settings.BoardActiveLow, false))
 			{
 				pin.Open(PinMode.Output);
 				pin.SetActive(true);
@@ -53,14 +53,14 @@ namespace MyCastle
 		}
 
 
-		[HttpPut("{pin}")]
-		public void Delete(int pinNumber)
+		[HttpDelete("{id}")]
+		public void Delete(int id)
 		{
-			var area = settings.GetArea(pinNumber);
+			var area = settings.GetArea(id);
 			if (area == null)
-				throw new ArgumentException($"Pin {pinNumber} is not found.");
+				throw new ArgumentException($"Pin {id} is not found.");
 
-			using (var pin = new Pin(gpio, pinNumber, settings.BoardActiveLow, true))
+			using (var pin = new Pin(gpio, id, settings.BoardActiveLow, true))
 			{
 				pin.Open(PinMode.Output);
 				pin.SetActive(false);
