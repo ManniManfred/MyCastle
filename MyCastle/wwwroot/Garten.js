@@ -99,8 +99,13 @@ var app = new Vue({
 
 var gartenSvg = document.getElementById("GartenSvg");
 
-var zoneMouseDown = function () {
-	app.setActiveArea(this.id);
+var zoneMouseDown = function (e) {
+  var top = e.pageY;
+  var left = e.pageX;
+	
+	app.$refs.myContextMenu.style.display = "block";
+	app.$refs.myContextMenu.style.top = top + "px";
+	app.$refs.myContextMenu.style.left = left + "px";
 }
 
 var zoneMouseEnter = function () {
