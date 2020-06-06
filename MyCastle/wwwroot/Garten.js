@@ -11,15 +11,22 @@ var app = new Vue({
 	data: {
 		areas: [],
 		activeArea: null,
+		menuArea: null,
 		gartenSvg: null,
 	},
 	methods: {
 		initSvg: function() {
 			this.gartenSvg = document.getElementById("GartenSvg");
 			this.gartenSvg.addEventListener("load", this.gartenSvgOnLoad, false);
+
+			window.document.addEventListener("click", this.hideContextMenu);
+		},
+		hideContextMenu: function() {
+			this.$refs.myContextMenu.style.display = "none";
 		},
 		gartenSvgOnLoad: function() {
-			var svgDoc = this.gartenSvg.contentDocument;
+			let svgDoc = this.gartenSvg.contentDocument;
+			svgDoc.addEventListener("mousedown", this.hideContextMenu);
 			for (const key in this.areas) {
 				if (this.areas.hasOwnProperty(key)) {
 					const area = this.areas[key];
@@ -28,15 +35,20 @@ var app = new Vue({
 					area.element = zoneElement;
 					area.color = zoneElement.style.fill;
 
-					zoneElement.addEventListener("mousedown", this.zoneMouseDown, false);
+					zoneElement.addEventListener("click", this.zoneClick, false);
 					zoneElement.addEventListener("mouseenter", this.zoneMouseEnter, false);
 					zoneElement.addEventListener("mouseleave", this.zoneMouseLeave, false);
 				}
 			}
 		},
-		zoneMouseDown: function (e) {
-			var top = e.pageY;
-			var left = e.pageX;
+		zoneClick: function (e) {
+			this.menuArea = this.getArea(e.target.id);
+			if (this.menuArea == null)
+				return;
+				
+			let box = this.gartenSvg.getBoundingClientRect();
+			var top = e.pageY + box.top + window.pageYOffset;
+			var left = e.pageX + box.left + window.pageXOffset;
 			
 			this.$refs.myContextMenu.style.display = "block";
 			this.$refs.myContextMenu.style.top = top + "px";
