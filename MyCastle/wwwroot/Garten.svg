@@ -278,10 +278,10 @@
      inkscape:window-height="1027"
      inkscape:window-width="1920"
      showgrid="false"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="layer6"
      inkscape:document-units="mm"
-     inkscape:cy="1252.0396"
-     inkscape:cx="311.32363"
+     inkscape:cy="694.32157"
+     inkscape:cx="226.67"
      inkscape:zoom="0.5020458"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -351,12 +351,15 @@
      style="display:inline"
      transform="translate(-7.6953856,183.88373)">
     <path
-       style="fill:#00ff68;fill-opacity:1;stroke:none;stroke-width:0.37795275;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 429.7207,-390.15625 94.568359,-77.585938 V 287.11719 H 294.49219 v 59.8164 H 605 v 169.14258 h 95.79297 v -906.23242 z"
-       id="rect8482"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccccc"
-       transform="scale(0.26458333)" />
+       transform="matrix(0.26458333,0,0,0.26458333,7.6953856,-183.88373)"
+       d="M 400.63672 304.83789 L 65.484375 617.4082 L 65.484375 982.11133 L 265.4082 982.11133 L 265.4082 994.94336 L 618.05469 304.83789 L 400.63672 304.83789 z "
+       style="fill:#00ff68;fill-opacity:1;stroke:none;stroke-width:1.13385828;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="Rasen1" />
+    <path
+       transform="matrix(0.26458333,0,0,0.26458333,7.6953856,-183.88373)"
+       d="M 618.05469 304.83789 L 265.4082 994.94336 L 265.4082 1041.9277 L 575.91602 1041.9277 L 575.91602 1211.0703 L 671.70898 1211.0703 L 671.70898 304.83789 L 618.05469 304.83789 z "
+       style="fill:#00ff68;fill-opacity:1;stroke:none;stroke-width:1.13385828;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="Rasen2" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -416,18 +419,7 @@
      id="layer9"
      inkscape:label="Bewässerung"
      style="display:inline"
-     transform="translate(-7.6953856,183.88373)">
-    <path
-       id="Rasen1"
-       style="fill:#000080;fill-opacity:0.736334;stroke-width:3.71632"
-       d="M 400.20312 310.4707 L 241.60938 459.86328 L 67.169922 623.29102 L 67.361328 976.3418 A 353.05061 353.05061 0 0 0 131.46289 970.4375 A -148.65289 148.65289 0 0 0 128.91992 972.98047 L 277.57227 972.98047 L 426.22461 972.98047 A -148.65289 148.65289 0 0 0 321.45312 868.20898 A 353.05061 353.05061 0 0 0 391.14062 763.60742 A 353.05061 353.05061 0 0 0 418.50977 588.5918 A 278.72418 278.72418 0 0 0 502.61523 569.69922 A 278.72418 278.72418 0 0 0 678.92578 311.31836 L 400.20312 310.4707 z "
-       transform="matrix(0.26458333,0,0,0.26458333,7.6953856,-183.88373)" />
-    <path
-       id="Rasen2"
-       style="fill:#000080;fill-opacity:0.736334;stroke-width:3.75223"
-       d="M 670.51953 312.81641 A 375.22295 375.22295 0 0 0 295.29688 688.03906 A 375.22295 375.22295 0 0 0 423.79297 970.73633 L 281.91992 970.73633 L 281.91992 1033.168 L 523.28516 1033.168 A 375.22295 375.22295 0 0 0 600.6875 1056.707 A 94.225829 94.225829 0 0 0 575.57031 1120.7578 A 94.225829 94.225829 0 0 0 669.79688 1214.9824 L 669.79688 1120.7578 L 669.79688 1063.2598 A 375.22295 375.22295 0 0 0 670.51953 1063.2617 L 670.51953 688.03906 L 670.51953 312.81641 z "
-       transform="matrix(0.26458333,0,0,0.26458333,7.6953856,-183.88373)" />
-  </g>
+     transform="translate(-7.6953856,183.88373)" />
   <g
      inkscape:groupmode="layer"
      id="layer4"

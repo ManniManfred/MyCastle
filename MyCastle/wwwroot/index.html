@@ -21,15 +21,15 @@
 		<div id="zones" class="position-fixed float-left">
 			<table class="table bg-light">
 				<thead>
-					<tr>
-						<th scope="col">Zone</th>
-						<th scope="col"></th>
+					<tr class="cursor-pointer" v-on:click="zoneMenuVisible = !zoneMenuVisible">
+						<th scope="col">Zonen</th>
+						<th scope="col"><i class="fas" v-bind:class="{'fa-arrow-up': zoneMenuVisible, 'fa-arrow-down': !zoneMenuVisible}"></i></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="area in areas" v-bind:class="{'bg-primary':(area == activeArea)}">
-						<td class="cursor-pointer" v-on:click="setActiveArea(area)">{{area.name}}</td>
-						<td><i class="cursor-pointer fas mr-1" v-bind:class="{ 'fa-faucet': area.open, 'fa-shower': !area.open }" v-on:click="switchOpen(area)"></i>{{ "" + area.open}}</td>
+					<tr v-if="zoneMenuVisible" v-for="area in areas">
+						<td>{{area.name}}</td>
+						<td><i class="cursor-pointer fas mr-1" v-bind:class="{ 'fa-shower': area.open }" v-on:click="setOpen(area, false)"></i></td>
 					</tr>
 				</tbody>
 			</table>

@@ -10,7 +10,7 @@ var app = new Vue({
 	el: '#app',
 	data: {
 		areas: [],
-		activeArea: null,
+		zoneMenuVisible: false,
 		menuArea: null,
 		gartenSvg: null,
 	},
@@ -45,7 +45,7 @@ var app = new Vue({
 			this.menuArea = this.getArea(e.target.id);
 			if (this.menuArea == null)
 				return;
-				
+
 			let box = this.gartenSvg.getBoundingClientRect();
 			var top = e.pageY + box.top + window.pageYOffset;
 			var left = e.pageX + box.left + window.pageXOffset;
@@ -61,14 +61,8 @@ var app = new Vue({
 		},
 		zoneMouseLeave: function (e) {
 			const area = this.getArea(e.target.id);
-			if (this.activeArea == area) {
-				e.target.style.fill = activeFill;
-				e.target.style.strokeWidth = 0.7;
-			}
-			else {
-				e.target.style.fill = area.color;
-				e.target.style.strokeWidth = 0.0;
-			}
+			e.target.style.fill = area.color;
+			e.target.style.strokeWidth = 0.0;
 		},
 		loadSettings: function () {
 			this.$http.get('./settings.json').then(response => {
@@ -118,32 +112,6 @@ var app = new Vue({
 				this.$http.delete('/api/open/' + area.pin);
 
 			area.open = value;
-		},
-		setActiveArea: function (area) {
-			if (typeof area == "string")
-				area = this.getArea(area);
-			
-			if (area === this.$data.activeArea)
-				area = null;
-
-			if (this.activeArea) {
-				var areaEle = this.activeArea.element;
-				if (areaEle) {
-					areaEle.style.fill = this.activeArea.color;
-					areaEle.style.strokeWidth = 0.0;
-				}
-			}
-
-			this.activeArea = area;
-
-			if (this.activeArea) {
-				var areaEle = this.activeArea.element;
-				if (areaEle) {
-					areaEle.style.fill = activeFill;
-					areaEle.style.strokeWidth = 0.7;
-					areaEle.style.stroke = "black";
-				}
-			}
 		}
 	},
 	mounted: function () {
