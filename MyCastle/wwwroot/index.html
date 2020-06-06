@@ -38,8 +38,8 @@
 		<object id="GartenSvg" data="Garten.svg" type="image/svg+xml"></object>
 		
 		<div ref="myContextMenu" class="dropdown-menu dropdown-menu-sm" id="context-menu">
-			<a v-if="menuArea && !menuArea.open" class="dropdown-item" href="#" v-on:click="setOpen(menuArea, true)"><i class="fas fa-play mr-1"></i>{{menuArea?.name}} bewässern</a>
-			<a v-if="menuArea && menuArea.open" class="dropdown-item" href="#" v-on:click="setOpen(menuArea, false)"><i class="fas fa-stop mr-1"></i>{{menuArea?.name}} Bewässerung stoppen</a>
+			<div v-if="menuArea != null && !menuArea.open" class="dropdown-item cursor-pointer" v-on:click="setOpen(menuArea, true)"><i class="fas fa-play mr-1"></i>{{menuArea?.name}} bewässern</div>
+			<div v-if="menuArea != null && menuArea.open" class="dropdown-item cursor-pointer" v-on:click="setOpen(menuArea, false)"><i class="fas fa-stop mr-1"></i>{{menuArea?.name}} Bewässerung stoppen</div>
 		</div>
 	</div>
 
