@@ -3,7 +3,7 @@ import vueResource from 'https://cdn.jsdelivr.net/npm/vue-resource@1.5.1/dist/vu
 
 Vue.use(vueResource);
 
-const activeFill = "#007bff";
+const openFill = "#007bff";
 const hoverFill = "#cccccc";
 
 var app = new Vue({
@@ -40,6 +40,7 @@ var app = new Vue({
 					zoneElement.addEventListener("mouseleave", this.zoneMouseLeave, false);
 				}
 			}
+			this.loadOpened();
 		},
 		zoneClick: function (e) {
 			this.menuArea = this.getArea(e.target.id);
@@ -61,7 +62,10 @@ var app = new Vue({
 		},
 		zoneMouseLeave: function (e) {
 			const area = this.getArea(e.target.id);
-			e.target.style.fill = area.color;
+			if (area == null)
+				return;
+
+			e.target.style.fill = area.open ? openFill : area.color;
 			e.target.style.strokeWidth = 0.0;
 		},
 		loadSettings: function () {
@@ -87,7 +91,7 @@ var app = new Vue({
 					for (let i = 0; i < response.data.length; i++) {
 						var area = this.getArea(response.data[i]);
 						area.open = true;
-						//area.name = "Test " + area.name;
+						area.element.style.fill = area.open ? openFill : area.color;
 					}
 				}
 			});
@@ -112,11 +116,12 @@ var app = new Vue({
 				this.$http.delete('/api/open/' + area.pin);
 
 			area.open = value;
+
+			area.element.style.fill = area.open ? openFill : area.color;
 		}
 	},
 	mounted: function () {
 		this.loadSettings();
-		this.loadOpened();
 	}
 });
 
