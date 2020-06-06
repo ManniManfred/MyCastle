@@ -3,6 +3,7 @@ const staticAssets = [
 	'./',
 	'./index.html',
 	'./favicon.ico',
+	'./font-awesome-animation.min.css',
 	'./Garten.css',
 	'./Garten.js',
 	'./Garten.svg',
