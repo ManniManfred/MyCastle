@@ -9,11 +9,55 @@ const hoverFill = "#cccccc";
 var app = new Vue({
 	el: '#app',
 	data: {
-		message: 'Hello Vue!',
 		areas: [],
-		activeArea: null
+		activeArea: null,
+		gartenSvg: null,
 	},
 	methods: {
+		initSvg: function() {
+			this.gartenSvg = document.getElementById("GartenSvg");
+			this.gartenSvg.addEventListener("load", this.gartenSvgOnLoad, false);
+		},
+		gartenSvgOnLoad: function() {
+			var svgDoc = this.gartenSvg.contentDocument;
+			for (const key in this.areas) {
+				if (this.areas.hasOwnProperty(key)) {
+					const area = this.areas[key];
+
+					var zoneElement = svgDoc.getElementById(area.name);
+					area.element = zoneElement;
+					area.color = zoneElement.style.fill;
+
+					zoneElement.addEventListener("mousedown", this.zoneMouseDown, false);
+					zoneElement.addEventListener("mouseenter", this.zoneMouseEnter, false);
+					zoneElement.addEventListener("mouseleave", this.zoneMouseLeave, false);
+				}
+			}
+		},
+		zoneMouseDown: function (e) {
+			var top = e.pageY;
+			var left = e.pageX;
+			
+			this.$refs.myContextMenu.style.display = "block";
+			this.$refs.myContextMenu.style.top = top + "px";
+			this.$refs.myContextMenu.style.left = left + "px";
+		},	
+		zoneMouseEnter: function (e) {
+			e.target.style.fill = hoverFill;
+			e.target.style.strokeWidth = 0.7;
+			e.target.style.stroke = "black";
+		},
+		zoneMouseLeave: function (e) {
+			const area = this.getArea(e.target.id);
+			if (this.activeArea == area) {
+				e.target.style.fill = activeFill;
+				e.target.style.strokeWidth = 0.7;
+			}
+			else {
+				e.target.style.fill = area.color;
+				e.target.style.strokeWidth = 0.0;
+			}
+		},
 		loadSettings: function () {
 			this.$http.get('./settings.json').then(response => {
 				if (response && response.ok) {
@@ -26,7 +70,8 @@ var app = new Vue({
 							area.open = false;
 						}
 					}
-					this.$data.areas = areasArr;
+					this.areas = areasArr;
+					this.initSvg();
 				}
 			});
 		},
@@ -42,9 +87,9 @@ var app = new Vue({
 			});
 		},
 		getArea: function (areaName) {
-			for (const key in app.$data.areas) {
-				if (app.$data.areas.hasOwnProperty(key)) {
-					var work = app.$data.areas[key];
+			for (const key in this.areas) {
+				if (this.areas.hasOwnProperty(key)) {
+					var work = this.areas[key];
 					if (work.name == areaName)
 						return work;
 				}
@@ -69,18 +114,18 @@ var app = new Vue({
 			if (area === this.$data.activeArea)
 				area = null;
 
-			if (this.$data.activeArea) {
-				var areaEle = this.$data.activeArea.element;
+			if (this.activeArea) {
+				var areaEle = this.activeArea.element;
 				if (areaEle) {
-					areaEle.style.fill = this.$data.activeArea.color;
+					areaEle.style.fill = this.activeArea.color;
 					areaEle.style.strokeWidth = 0.0;
 				}
 			}
 
-			this.$data.activeArea = area;
+			this.activeArea = area;
 
-			if (this.$data.activeArea) {
-				var areaEle = this.$data.activeArea.element;
+			if (this.activeArea) {
+				var areaEle = this.activeArea.element;
 				if (areaEle) {
 					areaEle.style.fill = activeFill;
 					areaEle.style.strokeWidth = 0.7;
@@ -97,53 +142,6 @@ var app = new Vue({
 
 
 
-var gartenSvg = document.getElementById("GartenSvg");
-
-var zoneMouseDown = function (e) {
-  var top = e.pageY;
-  var left = e.pageX;
-	
-	app.$refs.myContextMenu.style.display = "block";
-	app.$refs.myContextMenu.style.top = top + "px";
-	app.$refs.myContextMenu.style.left = left + "px";
-}
-
-var zoneMouseEnter = function () {
-	this.style.fill = hoverFill;
-	this.style.strokeWidth = 0.7;
-	this.style.stroke = "black";
-}
-
-var zoneMouseLeave = function () {
-	const area = app.getArea(this.id);
-	if (app.$data.activeArea == area) {
-		this.style.fill = activeFill;
-		this.style.strokeWidth = 0.7;
-	}
-	else {
-		this.style.fill = area.color;
-		this.style.strokeWidth = 0.0;
-	}
-}
-
-gartenSvg.addEventListener("load", function () {
-
-	for (const key in app.$data.areas) {
-		if (app.$data.areas.hasOwnProperty(key)) {
-			const area = app.$data.areas[key];
-
-			var svgDoc = gartenSvg.contentDocument;
-			var zoneElement = svgDoc.getElementById(area.name);
-			area.element = zoneElement;
-			area.color = zoneElement.style.fill;
-
-			zoneElement.addEventListener("mousedown", zoneMouseDown, false);
-			zoneElement.addEventListener("mouseenter", zoneMouseEnter, false);
-			zoneElement.addEventListener("mouseleave", zoneMouseLeave, false);
-		}
-	}
-
-}, false);
 
 
 window.addEventListener('load', e => {
