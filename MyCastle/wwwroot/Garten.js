@@ -10,6 +10,8 @@ var app = new Vue({
 	el: '#app',
 	data: {
 		areas: [],
+		polling: false,
+		pollingId: null,
 		zoneMenuVisible: false,
 		menuArea: null,
 		gartenSvg: null,
@@ -40,7 +42,8 @@ var app = new Vue({
 					zoneElement.addEventListener("mouseleave", this.zoneMouseLeave, false);
 				}
 			}
-			this.initOpenPolling();
+			this.loadOpenStatus();
+			this.switchPolling();
 		},
 		zoneClick: function (e) {
 			this.menuArea = this.getArea(e.target.id);
@@ -85,9 +88,16 @@ var app = new Vue({
 				}
 			});
 		},
-		initOpenPolling: function () {
-			this.loadOpenStatus();
-			window.setInterval(this.loadOpenStatus, 1500);
+		switchPolling: function() {
+			this.polling = !this.polling;
+
+			if (this.pollingId != null) {
+				window.clearInterval(this.pollingId);
+				this.pollingId = null;
+			}
+			
+			if (this.polling)
+				this.pollingId = window.setInterval(this.loadOpenStatus, 1500);
 		},
 		loadOpenStatus: function() {
 			this.$http.get('/api/open').then(response => {

@@ -21,9 +21,10 @@
 		<div id="zones" class="position-fixed float-left">
 			<table class="table bg-light">
 				<thead>
-					<tr class="cursor-pointer" v-on:click="zoneMenuVisible = !zoneMenuVisible">
-						<th scope="col">Zonen</th>
-						<th scope="col"><i class="fas" v-bind:class="{'fa-arrow-up': zoneMenuVisible, 'fa-arrow-down': !zoneMenuVisible}"></i></th>
+					<tr class="cursor-pointer">
+						<th scope="col" v-on:click="zoneMenuVisible = !zoneMenuVisible">Zonen</th>
+						<th scope="col" v-on:click="zoneMenuVisible = !zoneMenuVisible"><i class="fas" v-bind:class="{'fa-arrow-up': zoneMenuVisible, 'fa-arrow-down': !zoneMenuVisible}"></i></th>
+						<th scope="col" v-on:click="switchPolling()"><i class="fas" v-bind:class="{'fa-sync': polling, 'fa-arrow-down': !polling}"></i></th>
 					</tr>
 				</thead>
 				<tbody>
