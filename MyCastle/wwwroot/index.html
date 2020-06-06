@@ -12,20 +12,22 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<link rel="stylesheet" href="Garten.css">
 
+	<link rel="stylesheet" href="./font-awesome-animation.min.css">
+
 	<link rel="manifest" href="./manifest.json">
 </head>
 
 <body>
 	<div id="app" class="container">
-
 		<div id="zones" class="position-fixed float-left">
 			<table class="table bg-light">
 				<thead>
 					<tr class="cursor-pointer">
 						<th scope="col" v-on:click="zoneMenuVisible = !zoneMenuVisible">Zonen</th>
 						<th scope="col" v-on:click="zoneMenuVisible = !zoneMenuVisible"><i class="fas" v-bind:class="{'fa-arrow-up': zoneMenuVisible, 'fa-arrow-down': !zoneMenuVisible}"></i></th>
-						<th scope="col" v-on:click="switchPolling()"><i class="fas" v-bind:class="{'fa-sync': polling, 'fa-arrow-down': !polling}"></i></th>
-					</tr>
+						<th scope="col" v-on:click="switchPolling()"><i class="fas fa-sync faa-spin faa-slow" v-bind:class="{'animated': polling }"></i></th>
+						
+					</tr>  	
 				</thead>
 				<tbody>
 					<tr v-if="zoneMenuVisible" v-for="area in areas">

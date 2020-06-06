@@ -97,7 +97,7 @@ var app = new Vue({
 			}
 			
 			if (this.polling)
-				this.pollingId = window.setInterval(this.loadOpenStatus, 1500);
+				this.pollingId = window.setInterval(this.loadOpenStatus, 1000);
 		},
 		loadOpenStatus: function() {
 			this.$http.get('/api/open').then(response => {
