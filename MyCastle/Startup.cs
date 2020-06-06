@@ -37,8 +37,8 @@ namespace MyCastle
 
 			services.AddElsaDashboard();
 
-			services.AddSingleton(typeof(IGpioController), new TestGpioController());
-			//services.AddSingleton(typeof(IGpioController), new RealGpioController());
+			//services.AddSingleton(typeof(IGpioController), new TestGpioController());
+			services.AddSingleton(typeof(IGpioController), new RealGpioController());
 			services.AddSingleton(typeof(Settings), typeof(Settings));
 		}
 
