@@ -40,7 +40,7 @@ var app = new Vue({
 					zoneElement.addEventListener("mouseleave", this.zoneMouseLeave, false);
 				}
 			}
-			this.loadOpened();
+			this.initOpenPolling();
 		},
 		zoneClick: function (e) {
 			this.menuArea = this.getArea(e.target.id);
@@ -85,13 +85,19 @@ var app = new Vue({
 				}
 			});
 		},
-		loadOpened: function () {
+		initOpenPolling: function () {
+			this.loadOpenStatus();
+			window.setInterval(this.loadOpenStatus, 1500);
+		},
+		loadOpenStatus: function() {
 			this.$http.get('/api/open').then(response => {
 				if (response && response.ok) {
-					for (let i = 0; i < response.data.length; i++) {
-						var area = this.getArea(response.data[i]);
-						area.open = true;
-						area.element.style.fill = area.open ? openFill : area.color;
+					for (const key in this.areas) {
+						if (this.areas.hasOwnProperty(key)) {
+							var area = this.areas[key];
+							area.open = response.data.includes(area.name);
+							area.element.style.fill = area.open ? openFill : area.color;
+						}
 					}
 				}
 			});
