@@ -89,8 +89,10 @@ var app = new Vue({
 			});
 		},
 		switchPolling: function() {
-			this.polling = !this.polling;
-
+			this.setPolling(!this.polling);
+		},
+		setPolling: function(value) {
+			this.polling = value;
 			if (this.pollingId != null) {
 				window.clearInterval(this.pollingId);
 				this.pollingId = null;
@@ -100,7 +102,7 @@ var app = new Vue({
 				this.pollingId = window.setInterval(this.loadOpenStatus, 1000);
 		},
 		loadOpenStatus: function() {
-			this.$http.get('/api/open').then(response => {
+			this.$http.get('/api/open', {timeout: 500}).then(response => {
 				if (response && response.ok) {
 					for (const key in this.areas) {
 						if (this.areas.hasOwnProperty(key)) {
@@ -110,7 +112,10 @@ var app = new Vue({
 						}
 					}
 				}
-			});
+				else
+					this.setPolling(false);
+			},
+			response => { this.setPolling(false); });
 		},
 		getArea: function (areaName) {
 			for (const key in this.areas) {
