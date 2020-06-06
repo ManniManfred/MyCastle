@@ -16,7 +16,7 @@ namespace MyCastle
 			c = new GpioController(PinNumberingScheme.Board);
 		}
 
-		public void ClosePin(int pinNumber)=>c.ClosePin(pinNumber);
+		public void ClosePin(int pinNumber) => c.ClosePin(pinNumber);
 
 		public bool IsPinOpen(int pinNumber) => c.IsPinOpen(pinNumber);
 

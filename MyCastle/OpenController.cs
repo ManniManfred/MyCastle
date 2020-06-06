@@ -30,7 +30,7 @@ namespace MyCastle
 
 			foreach (var area in settings.GetAreas())
 			{
-				var pin = new Pin(gpio, area.Pin, settings.BoardActiveLow);
+				var pin = new Pin(gpio, area.Pin, settings.BoardActiveLow, false);
 				if (pin.IsOpen && pin.IsActive())
 					result.Add(area.Name);
 			}
@@ -62,7 +62,6 @@ namespace MyCastle
 
 			using (var pin = new Pin(gpio, id, settings.BoardActiveLow, true))
 			{
-				pin.Open(PinMode.Output);
 				pin.SetActive(false);
 			}
 		}
