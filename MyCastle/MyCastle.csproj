@@ -8,6 +8,8 @@
     <PackageReference Include="Elsa" Version="1.2.2.29" />
     <PackageReference Include="Elsa.Dashboard" Version="1.2.2.29" />
     <PackageReference Include="Elsa.Persistence.EntityFrameworkCore" Version="1.2.2.29" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
     <PackageReference Include="System.Device.Gpio" Version="1.1.0-prerelease.20153.1" />
   </ItemGroup>
 
