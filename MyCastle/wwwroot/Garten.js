@@ -59,17 +59,20 @@ var app = new Vue({
 			this.$refs.myContextMenu.style.left = left + "px";
 		},	
 		zoneMouseEnter: function (e) {
-			e.target.style.fill = hoverFill;
-			e.target.style.strokeWidth = 0.7;
-			e.target.style.stroke = "black";
+			const area = this.getArea(e.target.id);
+			if (area == null)
+				return;
+
+			area.mouseOver = true;
+			this.setAreaFill(area);
 		},
 		zoneMouseLeave: function (e) {
 			const area = this.getArea(e.target.id);
 			if (area == null)
 				return;
 
-			e.target.style.fill = area.open ? openFill : area.color;
-			e.target.style.strokeWidth = 0.0;
+			area.mouseOver = false;
+			this.setAreaFill(area);
 		},
 		loadSettings: function () {
 			this.$http.get('./settings.json').then(response => {
@@ -108,7 +111,7 @@ var app = new Vue({
 						if (this.areas.hasOwnProperty(key)) {
 							var area = this.areas[key];
 							area.open = response.data.includes(area.name);
-							area.element.style.fill = area.open ? openFill : area.color;
+							this.setAreaFill(area);
 						}
 					}
 				}
@@ -137,8 +140,19 @@ var app = new Vue({
 				this.$http.delete('/api/open/' + area.pin);
 
 			area.open = value;
-
-			area.element.style.fill = area.open ? openFill : area.color;
+			this.setAreaFill(area);
+		},
+		setAreaFill: function(area) {
+			
+			if (area.mouseOver) {
+				area.element.style.fill = hoverFill;
+				area.element.strokeWidth = 0.7;
+				area.element.stroke = "black";
+			}
+			else {
+				area.element.style.fill = area.open ? openFill : area.color;
+				area.element.strokeWidth = 0.0;
+			}
 		}
 	},
 	mounted: function () {
