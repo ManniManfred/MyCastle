@@ -24,7 +24,7 @@ var app = new Vue({
 			window.document.addEventListener("click", this.hideContextMenu);
 		},
 		hideContextMenu: function() {
-			this.$refs.myContextMenu.style.display = "none";
+			this.$refs.myContextMenu.style.visibility = "hidden";
 		},
 		gartenSvgOnLoad: function() {
 			let svgDoc = this.gartenSvg.contentDocument;
@@ -51,10 +51,21 @@ var app = new Vue({
 				return;
 
 			let box = this.gartenSvg.getBoundingClientRect();
-			var top = e.pageY + box.top + window.pageYOffset;
-			var left = e.pageX + box.left + window.pageXOffset;
+			var top = e.pageY + box.top;
+			var left = e.pageX + box.left;
 			
 			this.$refs.myContextMenu.style.display = "block";
+			this.$refs.myContextMenu.style.visibility = "visible";
+
+			if (top + this.$refs.myContextMenu.offsetHeight >= window.innerHeight)
+				top = window.innerHeight - this.$refs.myContextMenu.offsetHeight - 1;
+			
+			if (left + this.$refs.myContextMenu.offsetWidth >= window.innerWidth)
+				left = window.innerWidth - this.$refs.myContextMenu.offsetWidth - 1;
+				
+			top +=  window.pageYOffset;
+			left += window.pageXOffset;
+
 			this.$refs.myContextMenu.style.top = top + "px";
 			this.$refs.myContextMenu.style.left = left + "px";
 		},	
