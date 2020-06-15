@@ -176,6 +176,6 @@ async function registerSW() {
       alert('ServiceWorker registration failed. Sorry about that.'); 
     }
   } else {
-    document.querySelector('.alert').removeAttribute('hidden'); 
+    document.getElementById('alertServiceWorker').removeAttribute('hidden'); 
   }
 }
