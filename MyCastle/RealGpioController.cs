@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Device.Gpio;
-using System.Linq;
-using System.Threading.Tasks;
-using YamlDotNet.Core.Tokens;
+﻿using System.Device.Gpio;
 
 namespace MyCastle
 {

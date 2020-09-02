@@ -2,15 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Elsa.Activities.Http.Extensions;
-using Elsa.Activities.Timers.Extensions;
-using Elsa.Dashboard.Extensions;
-using Elsa.Persistence.EntityFrameworkCore.DbContexts;
-using Elsa.Persistence.EntityFrameworkCore.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -24,22 +18,11 @@ namespace MyCastle
 		{
 			services.AddSingleton(Console.Out);
 
-			services.AddElsa(elsa => elsa
-						.AddEntityFrameworkStores<SqliteContext>(options => options
-							.UseSqlite("Data Source=mycastle.db;Cache=Shared")));
-
-			services.AddActivity<OpenValve>();
-			services.AddActivity<LogMessage>();
-			
-			services
-					.AddHttpActivities()
-					.AddTimerActivities();
-
-			services.AddElsaDashboard();
-
-			//services.AddSingleton(typeof(IGpioController), new TestGpioController());
-			services.AddSingleton(typeof(IGpioController), new RealGpioController());
+			services.AddSingleton(typeof(IGpioController), new TestGpioController());
+			//services.AddSingleton(typeof(IGpioController), new RealGpioController());
 			services.AddSingleton(typeof(Settings), typeof(Settings));
+
+			services.AddControllers();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,21 +35,16 @@ namespace MyCastle
 
 			app.UseDefaultFiles();
 			app.UseStaticFiles();
-
-
-			app.UseHttpActivities();
-
 			app.UseRouting();
 			app.UseEndpoints(ep => ep.MapControllers());
 
-
-			app.UseEndpoints(endpoints =>
-			{
-			    endpoints.MapGet("/", async context =>
-			    {
-			        await context.Response.WriteAsync("Hello World!");
-			    });
-			});
+			//app.UseEndpoints(endpoints =>
+			//{
+			//	endpoints.MapGet("/", async context =>
+			//	{
+			//		await context.Response.WriteAsync("Hello World!");
+			//	});
+			//});
 		}
 	}
 }
