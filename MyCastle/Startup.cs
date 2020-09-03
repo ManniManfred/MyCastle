@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyCastle.Entities;
 
 namespace MyCastle
 {
@@ -20,7 +21,9 @@ namespace MyCastle
 
 			services.AddSingleton(typeof(IGpioController), new TestGpioController());
 			//services.AddSingleton(typeof(IGpioController), new RealGpioController());
+
 			services.AddSingleton(typeof(Settings), typeof(Settings));
+			services.AddSingleton(typeof(Programs), typeof(Programs));
 
 			services.AddControllers();
 		}

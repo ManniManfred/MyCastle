@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Rasen abends",
+		"cron": "40 18 * * *",
+		"program": [
+			{
+				"area": "Rasen1",
+				"duration": "00:10:00"
+			}
+		]
+	},
+	{
+		"name": "Rasen morgens",
+		"cron": "40 8 * * *",
+		"program": [
+			{
+				"area": "Rasen1",
+				"duration": "00:10:00"
+			},
+			{
+				"area": "Rasen1",
+				"duration": "00:10:00"
+			}
+		]
+	}
+]

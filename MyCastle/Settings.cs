@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using MyCastle.Entities;
 
 namespace MyCastle
 {

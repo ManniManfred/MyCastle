@@ -19,30 +19,90 @@
 
 <body>
 	<div id="app" class="container">
-		<div id="zones" class="position-fixed float-left">
-			<table class="table bg-light">
-				<thead>
-					<tr class="cursor-pointer">
-						<th scope="col" v-on:click="zoneMenuVisible = !zoneMenuVisible">Zonen</th>
-						<th scope="col" v-on:click="zoneMenuVisible = !zoneMenuVisible"><i class="fas" v-bind:class="{'fa-arrow-up': zoneMenuVisible, 'fa-arrow-down': !zoneMenuVisible}"></i></th>
-						<th scope="col" v-on:click="switchPolling()"><i class="fas fa-sync faa-spin faa-slow" v-bind:class="{'animated': polling }"></i></th>
-						
-					</tr>  	
-				</thead>
-				<tbody>
-					<tr v-if="zoneMenuVisible" v-for="area in areas">
-						<td>{{area.name}}</td>
-						<td><i class="cursor-pointer fas mr-1" v-bind:class="{ 'fa-shower': area.open }" v-on:click="setOpen(area, false)"></i></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
 
+		<div class="fixed-top">
+			<div id="sync" class="float-left">
+				<table class="table bg-light">
+					<thead>
+						<tr class="cursor-pointer">
+							<th scope="col" v-on:click="switchPolling()"><i class="fas fa-sync faa-spin faa-slow"
+									v-bind:class="{'animated': polling }"></i></th>
+						</tr>
+					</thead>
+				</table>
+
+			</div>
+
+			<div class="float-left" style="padding-left: 10pt;">
+				<table class="table bg-light">
+					<thead>
+						<tr class="cursor-pointer">
+							<th scope="col" v-on:click="zoneMenuVisible = !zoneMenuVisible">Zonen&nbsp;&nbsp;</th>
+							<th scope="col" v-on:click="zoneMenuVisible = !zoneMenuVisible"><i class="fas"
+									v-bind:class="{'fa-arrow-up': zoneMenuVisible, 'fa-arrow-down': !zoneMenuVisible}"></i></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-if="zoneMenuVisible" v-for="area in areas">
+							<td>{{area.name}}</td>
+							<td><i class="cursor-pointer fas mr-1" v-bind:class="{ 'fa-shower': area.open }"
+									v-on:click="setOpen(area, false)"></i></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<div class="float-left" style="padding-left: 10pt;">
+				<table class="table">
+					<thead class="bg-light">
+						<tr class="cursor-pointer">
+							<th scope="col" v-on:click="programsMenuVisible = !programsMenuVisible">Programme</th>
+							<th scope="col" v-on:click="programsMenuVisible = !programsMenuVisible"><i class="fas"
+									v-bind:class="{'fa-arrow-up': programsMenuVisible, 'fa-arrow-down': !programsMenuVisible}"></i></th>
+						</tr>
+					</thead>
+					<tbody v-bind:class="{ 'invisible': !programsMenuVisible, 'bg-light': programsMenuVisible }">
+						<tr v-for="(program, index) in programs">
+							<td>
+								<i class="cursor-pointer far" v-bind:class="{ 'fa-check-square': program.active, 'fa-square': !program.active }" v-on:click="program.active = !program.active"></i>
+								<input v-model="program.name" size="15">
+								<input v-model="program.cron" size="8" style="padding-left: 10px;">
+								<a href="https://crontab.guru/"	target="_blank"><i class="cursor-pointer fas fa-question"></i></a>
+
+								<div style="padding-top: 10px; padding-left: 20px;">
+									<p v-for="(task, tIndex) in program.tasks">
+										<select v-model="task.area">
+											<option v-for="area in areas" v-bind:value="area.pin">{{area.name}}</option>
+										</select>
+										<input v-model="task.duration" size="10">
+										<i class="cursor-pointer fas fa-trash" v-on:click="removeTask(program, tIndex)"></i>
+									</p>
+									<i class="cursor-pointer fas fa-plus-square" v-on:click="appendTask(program)"></i>
+								</div>
+							</td>
+							<td><i class="cursor-pointer fas fa-trash" v-on:click="removeProgram(index)"></i></td>
+						</tr>
+						<tr>
+							<td>
+								<i class="cursor-pointer fas fa-plus-square" v-on:click="appendProgram()"></i>
+							</td>
+							<td>
+								<i class="cursor-pointer fas fa-save" style="font-size: 2em" v-on:click="savePrograms()"></i>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 		<object id="GartenSvg" data="Garten.svg" type="image/svg+xml"></object>
-		
+
 		<div ref="myContextMenu" class="dropdown-menu dropdown-menu-sm" id="context-menu">
-			<div v-if="menuArea != null && !menuArea.open" class="dropdown-item cursor-pointer" v-on:click="setOpen(menuArea, true)"><i class="fas fa-play mr-1"></i>{{menuArea?.name}} bewässern</div>
-			<div v-if="menuArea != null && menuArea.open" class="dropdown-item cursor-pointer" v-on:click="setOpen(menuArea, false)"><i class="fas fa-stop mr-1"></i>{{menuArea?.name}} Bewässerung stoppen</div>
+			<div v-if="menuArea != null && !menuArea.open" class="dropdown-item cursor-pointer"
+				v-on:click="setOpen(menuArea, true)"><i class="fas fa-play mr-1"></i>{{menuArea?.name}} bewässern</div>
+			<div v-if="menuArea != null && menuArea.open" class="dropdown-item cursor-pointer"
+				v-on:click="setOpen(menuArea, false)"><i class="fas fa-stop mr-1"></i>{{menuArea?.name}} Bewässerung stoppen
+			</div>
 		</div>
 	</div>
 

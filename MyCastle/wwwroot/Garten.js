@@ -10,9 +10,11 @@ var app = new Vue({
 	el: '#app',
 	data: {
 		areas: [],
+		programs: [],
 		polling: false,
 		pollingId: null,
 		zoneMenuVisible: false,
+		programsMenuVisible: false,
 		menuArea: null,
 		gartenSvg: null,
 	},
@@ -102,6 +104,30 @@ var app = new Vue({
 				}
 			});
 		},
+		loadPrograms: function () {
+			this.$http.get('/api/program').then(response => {
+				if (response && response.ok) {
+					this.programs = response.data;
+				}
+			});
+		},
+		removeProgram: function(programIndex) {
+			this.programs.splice(programIndex, 1);
+		},
+		appendProgram: function() {
+			this.programs.push({ name: "Programm" });
+		},
+		savePrograms: function() {
+			this.$http.post('/api/program', this.programs).then(response => {
+				
+			});
+		},
+		appendTask: function(program) {
+			program.tasks.push({"area": 11, "duration": "00:10:00"});
+		},
+		removeTask: function(program, tIndex) {
+			program.tasks.splice(tIndex, 1);
+		},
 		switchPolling: function() {
 			this.setPolling(!this.polling);
 		},
@@ -168,6 +194,7 @@ var app = new Vue({
 	},
 	mounted: function () {
 		this.loadSettings();
+		this.loadPrograms();
 	}
 });
 
