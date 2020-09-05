@@ -64,7 +64,7 @@
 						</tr>
 					</thead>
 					<tbody v-bind:class="{ 'invisible': !programsMenuVisible, 'bg-light': programsMenuVisible }">
-						<tr v-for="(program, index) in programs">
+						<tr v-for="(program, index) in programs" v-if="editMode || program.active">
 							<td>
 								<div v-if="editMode">
 									<input v-if="editMode" v-model="program.name" size="15">
