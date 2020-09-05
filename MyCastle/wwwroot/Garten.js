@@ -122,7 +122,7 @@ var app = new Vue({
 			this.programs.splice(programIndex, 1);
 		},
 		appendProgram: function() {
-			this.programs.push({ name: "Programm", tasks: [] });
+			this.programs.push({jobRunning: false, active: false, name: "Programm", cron: "0 16 * * *", tasks: [] });
 		},
 		savePrograms: function() {
 			this.$http.post('/api/program', this.programs).then(response => {

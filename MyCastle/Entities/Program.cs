@@ -16,8 +16,10 @@ namespace MyCastle.Entities
 		[JsonIgnore]
 		internal Schedule Schedule { get; set; }
 
-		public bool JobRunning => Schedule?.JobRunning ?? false;
+		[JsonIgnore]
 		public bool Running => Schedule?.Running ?? false;
+
+		public bool JobRunning => Schedule?.JobRunning ?? false;
 
 		public bool Active { get; set; }
 		public string Name { get; set; }
