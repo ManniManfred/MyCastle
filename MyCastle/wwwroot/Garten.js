@@ -17,6 +17,7 @@ var app = new Vue({
 		programsMenuVisible: false,
 		menuArea: null,
 		gartenSvg: null,
+		editMode: false
 	},
 	methods: {
 		initSvg: function() {
@@ -168,6 +169,16 @@ var app = new Vue({
 				if (this.areas.hasOwnProperty(key)) {
 					var work = this.areas[key];
 					if (work.name == areaName)
+						return work;
+				}
+			}
+			return null;
+		},
+		getAreaByPin: function (pin) {
+			for (const key in this.areas) {
+				if (this.areas.hasOwnProperty(key)) {
+					var work = this.areas[key];
+					if (work.pin == pin)
 						return work;
 				}
 			}

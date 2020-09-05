@@ -56,40 +56,53 @@
 			<div class="float-left" style="padding-left: 10pt;">
 				<table class="table">
 					<thead class="bg-light">
-						<tr class="cursor-pointer">
-							<th scope="col" v-on:click="programsMenuVisible = !programsMenuVisible">Programme</th>
-							<th scope="col" v-on:click="programsMenuVisible = !programsMenuVisible"><i class="fas"
+						<tr>
+							<th scope="col">Programme &nbsp;<i class="cursor-pointer fas fa-pen"
+									v-bind:style="{'color': editMode ? 'red' : 'black'}" v-on:click="editMode = !editMode"> </th>
+							<th scope="col" class="cursor-pointer" v-on:click="programsMenuVisible = !programsMenuVisible"><i class="fas"
 									v-bind:class="{'fa-arrow-up': programsMenuVisible, 'fa-arrow-down': !programsMenuVisible}"></i></th>
 						</tr>
 					</thead>
 					<tbody v-bind:class="{ 'invisible': !programsMenuVisible, 'bg-light': programsMenuVisible }">
 						<tr v-for="(program, index) in programs">
 							<td>
-								<input v-model="program.name" size="15">
-								<input v-model="program.cron" size="8" style="padding-left: 10px;">
-								<a href="https://crontab.guru/" target="_blank"><i class="cursor-pointer fas fa-question"></i></a>
+								<div v-if="editMode">
+									<input v-if="editMode" v-model="program.name" size="15">
+									<input v-if="editMode" v-model="program.cron" size="8" style="padding-left: 10px;">
+									<a href="https://crontab.guru/" target="_blank"><i class="cursor-pointer fas fa-question"></i></a>
+								</div>
+								<p v-if="!editMode">
+									<b>{{program.name}}</b> - {{program.cron}}
+								</p>
 								<p>
+									<div v-if="editMode">
 									Aktiv: <i class="cursor-pointer far"
 										v-bind:class="{ 'fa-check-square': program.active, 'fa-square': !program.active }"
 										v-on:click="program.active = !program.active"></i>
-									Läuft: <i class="cursor-pointer fas fa-shower" v-on:click="switchProgramRun(program)"
+									</div>
+									<div v-if="!editMode">
+									<i class="cursor-pointer fas fa-shower" v-on:click="switchProgramRun(program)"
 														v-bind:style="{ color: program.isRunning ? 'blue' :'grey' }">&nbsp;{{program.isRunning ? 'Stoppen' : 'Testlauf starten'}}</i>
+									</div>
 								</p>
 								<div style="padding-top: 10px; padding-left: 20px;">
 									<b>Abfolge</b>
-									<p v-for="(task, tIndex) in program.tasks">
+									<p v-for="(task, tIndex) in program.tasks" v-if="editMode">
 										<select v-model="task.area">
 											<option v-for="area in areas" v-bind:value="area.pin">{{area.name}}</option>
 										</select>
 										<input v-model="task.duration" size="10">
 										<i class="cursor-pointer fas fa-trash" v-on:click="removeTask(program, tIndex)"></i>
 									</p>
-									<i class="cursor-pointer fas fa-plus-square" v-on:click="appendTask(program)"></i>
+									<p v-for="task in program.tasks" v-if="!editMode">
+										{{getAreaByPin(task.area).name}} - {{task.duration}}
+									</p>
+									<i class="cursor-pointer fas fa-plus-square" v-on:click="appendTask(program)" v-if="editMode"></i>
 								</div>
 							</td>
-							<td><i class="cursor-pointer fas fa-trash" v-on:click="removeProgram(index)"></i></td>
+							<td><i class="cursor-pointer fas fa-trash" v-on:click="removeProgram(index)" v-if="editMode"></i></td>
 						</tr>
-						<tr>
+						<tr v-if="editMode">
 							<td>
 								<i class="cursor-pointer fas fa-plus-square" v-on:click="appendProgram()"></i>
 							</td>
