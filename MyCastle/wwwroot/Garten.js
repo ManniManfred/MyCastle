@@ -116,7 +116,7 @@ var app = new Vue({
 			this.programs.splice(programIndex, 1);
 		},
 		appendProgram: function() {
-			this.programs.push({ name: "Programm" });
+			this.programs.push({ name: "Programm", tasks: [] });
 		},
 		savePrograms: function() {
 			this.$http.post('/api/program', this.programs).then(response => {
