@@ -23,10 +23,11 @@ namespace MyCastle.Controllers
 		}
 
 		[HttpPost]
-		public void Post([FromBody] List<Entities.Program> data)
+		public bool Post([FromBody] List<Entities.Program> data)
 		{
 			programs.SetPrograms(data);
 			programs.Save();
+			return true;
 		}
 
 		[HttpPut("{name}")]

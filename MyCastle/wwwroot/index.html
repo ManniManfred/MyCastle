@@ -82,7 +82,7 @@
 									</div>
 									<div v-if="!editMode">
 									<i class="cursor-pointer fas fa-shower" v-on:click="switchProgramRun(program)"
-														v-bind:style="{ color: program.isRunning ? 'blue' :'grey' }">&nbsp;{{program.isRunning ? 'Stoppen' : 'Testlauf starten'}}</i>
+														v-bind:style="{ color: program.jobRunning ? 'blue' :'grey' }">&nbsp;{{program.jobRunning ? 'Stoppen' : 'Testlauf starten'}}</i>
 									</div>
 								</p>
 								<div style="padding-top: 10px; padding-left: 20px;">
@@ -105,6 +105,7 @@
 						<tr v-if="editMode">
 							<td>
 								<i class="cursor-pointer fas fa-plus-square" v-on:click="appendProgram()"></i>
+								&nbsp;<b>{{editFeedback}}</b>
 							</td>
 							<td>
 								<i class="cursor-pointer fas fa-save" style="font-size: 2em" v-on:click="savePrograms()"></i>

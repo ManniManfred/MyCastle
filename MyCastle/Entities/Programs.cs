@@ -41,10 +41,10 @@ namespace MyCastle.Entities
 				{
 					if (p.Name == programName)
 					{
-						if (p.IsRunning != to)
+						if (p.JobRunning != to)
 						{
-							if (p.IsRunning)
-								p.Schedule?.Stop();
+							if (p.Running)
+								p.Schedule.Stop();
 
 							if (to)
 								ScheduleProgram(p, true);
@@ -94,6 +94,7 @@ namespace MyCastle.Entities
 				{
 					foreach (var p in programs)
 					{
+						if (p.Running)
 						p.Schedule?.Stop();
 					}
 				}

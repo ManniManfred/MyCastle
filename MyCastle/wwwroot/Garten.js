@@ -17,7 +17,8 @@ var app = new Vue({
 		programsMenuVisible: false,
 		menuArea: null,
 		gartenSvg: null,
-		editMode: false
+		editMode: false,
+		editFeedback: ""
 	},
 	methods: {
 		initSvg: function() {
@@ -88,6 +89,11 @@ var app = new Vue({
 			area.mouseOver = false;
 			this.setAreaFill(area);
 		},
+		setEditFeedback: function(text) {
+			this.editFeedback = text;
+			var self = this;
+			window.setTimeout( function() { self.editFeedback = ""; }, 4000);
+		},
 		loadSettings: function () {
 			this.$http.get('./settings.json').then(response => {
 				if (response && response.ok) {
@@ -120,12 +126,15 @@ var app = new Vue({
 		},
 		savePrograms: function() {
 			this.$http.post('/api/program', this.programs).then(response => {
-				
+				if (response && response.ok)
+					this.setEditFeedback("Erfolgreich gespeichert");
+				else
+					this.setEditFeedback("Fehler beim speichern");
 			});
 		},
 		switchProgramRun: function(program) {
-			program.isRunning = !program.isRunning;
-			this.$http.put('/api/program/' + program.name, program.isRunning).then(response => {
+			program.jobRunning = !program.jobRunning;
+			this.$http.put('/api/program/' + program.name, program.jobRunning).then(response => {
 				
 			});
 		},
