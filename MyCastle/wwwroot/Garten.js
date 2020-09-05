@@ -111,7 +111,7 @@ var app = new Vue({
 				}
 			});
 		},
-		removeProgram: function(programIndex) {
+		removeProgram: function(programIndex) { 
 			this.programs.splice(programIndex, 1);
 		},
 		appendProgram: function() {
@@ -119,6 +119,12 @@ var app = new Vue({
 		},
 		savePrograms: function() {
 			this.$http.post('/api/program', this.programs).then(response => {
+				
+			});
+		},
+		switchProgramRun: function(program) {
+			program.isRunning = !program.isRunning;
+			this.$http.put('/api/program/' + program.name, program.isRunning).then(response => {
 				
 			});
 		},

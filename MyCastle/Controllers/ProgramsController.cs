@@ -29,5 +29,10 @@ namespace MyCastle.Controllers
 			programs.Save();
 		}
 
+		[HttpPut("{name}")]
+		public void SwitchRunning(string name, [FromBody] bool to)
+		{
+			programs.SwitchRunning(name, to);
+		}
 	}
 }

@@ -65,12 +65,18 @@
 					<tbody v-bind:class="{ 'invisible': !programsMenuVisible, 'bg-light': programsMenuVisible }">
 						<tr v-for="(program, index) in programs">
 							<td>
-								<i class="cursor-pointer far" v-bind:class="{ 'fa-check-square': program.active, 'fa-square': !program.active }" v-on:click="program.active = !program.active"></i>
 								<input v-model="program.name" size="15">
 								<input v-model="program.cron" size="8" style="padding-left: 10px;">
-								<a href="https://crontab.guru/"	target="_blank"><i class="cursor-pointer fas fa-question"></i></a>
-
+								<a href="https://crontab.guru/" target="_blank"><i class="cursor-pointer fas fa-question"></i></a>
+								<p>
+									Aktiv: <i class="cursor-pointer far"
+										v-bind:class="{ 'fa-check-square': program.active, 'fa-square': !program.active }"
+										v-on:click="program.active = !program.active"></i>
+									Läuft: <i class="cursor-pointer fas fa-shower" v-on:click="switchProgramRun(program)"
+														v-bind:style="{ color: program.isRunning ? 'blue' :'grey' }">&nbsp;{{program.isRunning ? 'Stoppen' : 'Testlauf starten'}}</i>
+								</p>
 								<div style="padding-top: 10px; padding-left: 20px;">
+									<b>Abfolge</b>
 									<p v-for="(task, tIndex) in program.tasks">
 										<select v-model="task.area">
 											<option v-for="area in areas" v-bind:value="area.pin">{{area.name}}</option>

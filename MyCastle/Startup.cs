@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentScheduler;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,8 +25,9 @@ namespace MyCastle
 
 			services.AddSingleton(typeof(Settings), typeof(Settings));
 			services.AddSingleton(typeof(Programs), typeof(Programs));
-
+			
 			services.AddControllers();
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +43,9 @@ namespace MyCastle
 			app.UseRouting();
 			app.UseEndpoints(ep => ep.MapControllers());
 
+			app.ApplicationServices.GetService<Programs>().AssertPrograms();
+			
+
 			//app.UseEndpoints(endpoints =>
 			//{
 			//	endpoints.MapGet("/", async context =>
@@ -49,5 +54,6 @@ namespace MyCastle
 			//	});
 			//});
 		}
+
 	}
 }

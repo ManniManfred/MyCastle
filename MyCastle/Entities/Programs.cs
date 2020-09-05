@@ -1,15 +1,28 @@
-﻿using System;
+﻿using FluentScheduler;
+using System;
 using System.Collections.Generic;
+using System.Device.Gpio;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MyCastle.Entities
 {
 	public class Programs
 	{
+		private object lockObj = new object();
+
 		private List<Program> programs;
+		private readonly Settings settings;
+		private readonly IGpioController gpio;
+
+		public Programs(Settings settings, IGpioController gpio)
+		{
+			this.settings = settings;
+			this.gpio = gpio;
+		}
 
 		private static JsonSerializerOptions GetOptions()
 		{
@@ -20,24 +33,41 @@ namespace MyCastle.Entities
 			};
 		}
 
-		private void AssertPrograms()
+		internal void SwitchRunning(string programName, bool to)
+		{
+			lock (lockObj)
+			{
+				foreach (var p in programs)
+				{
+					if (p.Name == programName)
+					{
+						if (p.IsRunning != to)
+						{
+							if (p.IsRunning)
+								p.Schedule?.Stop();
+
+							if (to)
+								ScheduleProgram(p, true);
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		internal void AssertPrograms()
 		{
 			if (programs != null)
 				return;
 
 			string path = GetPath();
 			if (File.Exists(path))
-				programs = JsonSerializer.Deserialize<List<Program>>(File.ReadAllText(path), GetOptions());
+				SetPrograms(JsonSerializer.Deserialize<List<Program>>(File.ReadAllText(path), GetOptions()));
 			else
-				programs = new List<Program>();
+				SetPrograms(new List<Program>());
 		}
 
-	internal void SetPrograms(List<Program> data)
-	{
-			programs = data;
-	}
-
-	private static string GetPath()
+		private static string GetPath()
 		{
 			var dir = Path.GetDirectoryName(typeof(Programs).Assembly.Location);
 			var path = Path.Combine(dir, "programs.json");
@@ -56,21 +86,63 @@ namespace MyCastle.Entities
 			return programs;
 		}
 
-		public void AddProgram(Program program)
+		internal void SetPrograms(List<Program> data)
 		{
-			AssertPrograms();
-			programs.Add(program);
+			lock (lockObj)
+			{
+				if (programs != null)
+				{
+					foreach (var p in programs)
+					{
+						p.Schedule?.Stop();
+					}
+				}
+
+				programs = data;
+
+				if (programs != null)
+				{
+					foreach (var p in GetPrograms())
+					{
+						if (p.Active)
+						{
+							ScheduleProgram(p);
+						}
+					}
+				}
+			}
 		}
 
-		public void RemoveProgram(Program program)
+		private void ScheduleProgram(Program p, bool testRun = false)
 		{
-			AssertPrograms();
-			programs.Remove(program);
+			Schedule schedule;
+			if (!testRun)
+				schedule = new Schedule(cancelToken => ExecuteProgram(cancelToken, p), p.Cron);
+			else
+				schedule = new Schedule(cancelToken => ExecuteProgram(cancelToken, p), s => s.OnceIn(TimeSpan.FromMilliseconds(0)));
+
+			schedule.Start();
+
+			p.Schedule = schedule;
 		}
 
-		public void UpdateProgram(Program program)
+		private Task ExecuteProgram(CancellationToken cancelToken, Program p)
 		{
+			foreach (var t in p.Tasks)
+			{
+				if (cancelToken.IsCancellationRequested)
+					return Task.CompletedTask;
 
+				using (var pin = new Pin(gpio, t.Area, settings.BoardActiveLow))
+				{
+					pin.Open(PinMode.Output);
+					pin.SetActive(true);
+
+					cancelToken.WaitHandle.WaitOne(t.Duration);
+				}
+			}
+			return Task.CompletedTask;
 		}
+
 	}
 }
