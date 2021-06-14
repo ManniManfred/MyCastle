@@ -16,11 +16,11 @@
 		},
 		{
 			"name": "Beet1",
-			"pin": 15
+			"pin": 16
 		},
 		{
 			"name": "Beet2",
-			"pin": 16
+			"pin": 15
 		}
 	]
 }
