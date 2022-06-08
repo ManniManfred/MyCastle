@@ -64,7 +64,7 @@
 						</tr>
 					</thead>
 					<tbody v-bind:class="{ 'invisible': !programsMenuVisible, 'bg-light': programsMenuVisible }">
-						<tr v-for="(program, index) in programs" v-if="editMode || program.active">
+						<tr v-for="(program, index) in programs">
 							<td>
 								<div v-if="editMode">
 									<input v-if="editMode" v-model="program.name" size="15">
@@ -72,7 +72,7 @@
 									<a href="https://crontab.guru/" target="_blank"><i class="cursor-pointer fas fa-question"></i></a>
 								</div>
 								<p v-if="!editMode">
-									<b>{{program.name}}</b> - {{program.cron}}
+									<b>{{program.name}}</b> - {{program.cron}} - <b>{{program.active ? "Aktiv" : "Inaktiv"}}</b>
 								</p>
 								<p>
 									<div v-if="editMode">
