@@ -13,13 +13,11 @@ namespace MyCastle
 		public Pin(IGpioController controller, int pin, bool activeLow, bool autoClose = true)
 		{
 			this.controller = controller;
-			PinNumber = pin;
 			ActiveLow = activeLow;
 			this.autoClose = autoClose;
 			pins = GetPins(pin);
 		}
 
-		public int PinNumber { get; }
 		public bool ActiveLow { get; }
 
 		public bool IsOpen 
@@ -84,7 +82,8 @@ namespace MyCastle
 		public void Dispose()
 		{
 			if (autoClose)
-				controller.ClosePin(PinNumber);
+				foreach (var pin in pins)
+					controller.ClosePin(pin);
 		}
 
 	}
