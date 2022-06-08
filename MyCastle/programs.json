@@ -1,25 +1,21 @@
 [
 	{
-		"name": "Rasen abends",
-		"cron": "40 18 * * *",
-		"program": [
+		"jobRunning": false,
+		"active": true,
+		"name": "Abends",
+		"cron": "30 20 * * *",
+		"tasks": [
 			{
-				"area": "Rasen1",
-				"duration": "00:10:00"
-			}
-		]
-	},
-	{
-		"name": "Rasen morgens",
-		"cron": "40 8 * * *",
-		"program": [
-			{
-				"area": "Rasen1",
-				"duration": "00:10:00"
+				"area": 11,
+				"duration": "00:06:00"
 			},
 			{
-				"area": "Rasen1",
-				"duration": "00:10:00"
+				"area": 12,
+				"duration": "00:06:00"
+			},
+			{
+				"area": 13,
+				"duration": "00:06:00"
 			}
 		]
 	}
