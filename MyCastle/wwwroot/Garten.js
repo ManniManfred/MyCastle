@@ -38,12 +38,17 @@ var app = new Vue({
 					const area = this.areas[key];
 
 					var zoneElement = svgDoc.getElementById(area.name);
-					area.element = zoneElement;
-					area.color = zoneElement.style.fill;
+					if (zoneElement) {
+						area.element = zoneElement;
+						area.color = zoneElement.style.fill;
 
-					zoneElement.addEventListener("click", this.zoneClick, false);
-					zoneElement.addEventListener("mouseenter", this.zoneMouseEnter, false);
-					zoneElement.addEventListener("mouseleave", this.zoneMouseLeave, false);
+						zoneElement.addEventListener("click", this.zoneClick, false);
+						zoneElement.addEventListener("mouseenter", this.zoneMouseEnter, false);
+						zoneElement.addEventListener("mouseleave", this.zoneMouseLeave, false);
+					}
+					else {
+						console.log("No area with name \"" + area.name + "\" found.");
+					}
 				}
 			}
 			this.loadOpenStatus();
@@ -205,8 +210,10 @@ var app = new Vue({
 			area.open = value;
 			this.setAreaFill(area);
 		},
-		setAreaFill: function(area) {
-			
+		setAreaFill: function (area) {
+			if (!area.element)
+				return;
+
 			if (area.mouseOver) {
 				area.element.style.fill = hoverFill;
 				area.element.strokeWidth = 0.7;
